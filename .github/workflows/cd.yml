@@ -20,21 +20,15 @@ jobs:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout code
+      - name: Checkout merged branch
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
           fetch-depth: 0
-
-      - name: Fetch latest changes
-        run: git fetch origin main
 
       - name: Find all added SQL files
         run: git diff --diff-filter=A --name-only origin/main -- ./**/*.sql > sql_files.txt
 
       - name: Show SQL files
         run: cat sql_files.txt
-
-      - name: Debug SQL files
-        run: |
-          echo "Listing all SQL files in repository:"
-          find . -name "*.sql"
