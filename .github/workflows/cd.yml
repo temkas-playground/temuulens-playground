@@ -28,13 +28,11 @@ jobs:
       - name: Fetch latest changes
         run: git fetch origin main
 
-      - name: Debugging file changes
-        run: git diff --name-only origin/main
+      - name: Find all added SQL files
+        run: git diff --diff-filter=A --name-only origin/main -- ./**/*.sql > sql_files.txt
 
-      - name: Execute sql changes to D1
-        run: |
-          git diff --cached --diff-filter=A --name-only origin/main -- ./**/*.sql > sql_files.txt
-          cat sql_files.txt
+      - name: Show SQL files
+        run: cat sql_files.txt
 
       - name: Debug SQL files
         run: |
