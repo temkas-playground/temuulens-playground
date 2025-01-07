@@ -18,11 +18,18 @@ jobs:
     timeout-minutes: 30
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Execute sql changes to D1
-        run: git diff --cached --diff-filter=A --name-only origin/main -- ./**/*.sql
+        id: execute_sql_changes
+        run: |
+          git diff --cached --diff-filter=A --name-only origin/main -- ./**/*.sql > sql_files.txt
+          cat sql_files.txt
+
+      - name: Show output of last command
+        run: cat sql_files.txt

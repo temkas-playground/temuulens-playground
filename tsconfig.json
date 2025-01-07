@@ -8,6 +8,9 @@
     },
     {
       "path": "./apps/next/sample-app"
+    },
+    {
+      "path": "./apps/next/sample-next"
     }
   ]
 }
