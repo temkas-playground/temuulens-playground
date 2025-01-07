@@ -25,11 +25,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Fetch latest changes
+        run: git fetch origin main
+
+      - name: Debugging file changes
+        run: git diff --name-only origin/main
+
       - name: Execute sql changes to D1
-        id: execute_sql_changes
         run: |
           git diff --cached --diff-filter=A --name-only origin/main -- ./**/*.sql > sql_files.txt
           cat sql_files.txt
 
-      - name: Show output of last command
-        run: cat sql_files.txt
+      - name: Debug SQL files
+        run: |
+          echo "Listing all SQL files in repository:"
+          find . -name "*.sql"
