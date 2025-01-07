@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
 
       - name: Find all added SQL files
-        run: git diff --diff-filter=A --name-only origin/main -- ./**/*.sql > sql_files.txt
+        run: git diff --diff-filter=A --name-only HEAD~1 HEAD -- ./**/*.sql > sql_files.txt
 
       - name: Show SQL files
         run: cat sql_files.txt
